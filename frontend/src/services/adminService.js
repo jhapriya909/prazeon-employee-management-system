@@ -3,38 +3,39 @@ import axios from "axios";
 const API_URL =
   import.meta.env.VITE_API_URL ||
   "http://localhost:5000/api";
-  
+
 const getAuthConfig = () => {
   const token = localStorage.getItem("token");
 
   return {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   };
 };
 
-// Get all employees
 export const getAllEmployees = async (params = {}) => {
-  const response = await axios.get(`${API_URL}/employees`, {
-    ...getAuthConfig(),
-    params,
-  });
+  const response = await axios.get(
+    `${API_URL}/employees`,
+    {
+      ...getAuthConfig(),
+      params,
+    }
+  );
 
   return response.data;
 };
 
-// Get single employee
-export const getEmployeeById = async (id) => {
+export const getEmployeeById = async (employeeId) => {
   const response = await axios.get(
-    `${API_URL}/employees/${id}`,
+    `${API_URL}/employees/${employeeId}`,
     getAuthConfig()
   );
 
   return response.data;
 };
 
-// Create employee
 export const createEmployee = async (employeeData) => {
   const response = await axios.post(
     `${API_URL}/employees`,
@@ -45,10 +46,12 @@ export const createEmployee = async (employeeData) => {
   return response.data;
 };
 
-// Update employee
-export const updateEmployee = async (id, employeeData) => {
+export const updateEmployee = async (
+  employeeId,
+  employeeData
+) => {
   const response = await axios.put(
-    `${API_URL}/employees/${id}`,
+    `${API_URL}/employees/${employeeId}`,
     employeeData,
     getAuthConfig()
   );
@@ -56,21 +59,13 @@ export const updateEmployee = async (id, employeeData) => {
   return response.data;
 };
 
-// Activate / Deactivate employee
-export const updateEmployeeStatus = async (id, isActive) => {
+export const updateEmployeeStatus = async (
+  employeeId,
+  isActive
+) => {
   const response = await axios.patch(
-    `${API_URL}/employees/${id}/status`,
+    `${API_URL}/employees/${employeeId}/status`,
     { isActive },
-    getAuthConfig()
-  );
-
-  return response.data;
-};
-
-// Employee statistics
-export const getEmployeeStats = async () => {
-  const response = await axios.get(
-    `${API_URL}/employees/stats`,
     getAuthConfig()
   );
 

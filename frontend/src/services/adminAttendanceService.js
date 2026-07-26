@@ -1,4 +1,4 @@
-import axios from "axios";
+﻿import axios from "axios";
 
 const API_URL =
   import.meta.env.VITE_API_URL ||
@@ -15,39 +15,13 @@ const getAuthConfig = () => {
   };
 };
 
-export const getTodayAttendance = async () => {
+export const getAllAttendance = async (date = "") => {
   const response = await axios.get(
-    `${API_URL}/attendance/today`,
-    getAuthConfig()
-  );
-
-  return response.data;
-};
-
-export const getAttendanceHistory = async () => {
-  const response = await axios.get(
-    `${API_URL}/attendance/history`,
-    getAuthConfig()
-  );
-
-  return response.data;
-};
-
-export const checkIn = async () => {
-  const response = await axios.post(
-    `${API_URL}/attendance/check-in`,
-    {},
-    getAuthConfig()
-  );
-
-  return response.data;
-};
-
-export const checkOut = async () => {
-  const response = await axios.put(
-    `${API_URL}/attendance/check-out`,
-    {},
-    getAuthConfig()
+    `${API_URL}/attendance/all`,
+    {
+      ...getAuthConfig(),
+      params: date ? { date } : {},
+    }
   );
 
   return response.data;
