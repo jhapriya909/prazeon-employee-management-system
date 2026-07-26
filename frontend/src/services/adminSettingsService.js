@@ -10,24 +10,23 @@ const getAuthConfig = () => {
   return {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   };
 };
 
-// Get Admin Profile
 export const getAdminProfile = async () => {
   const response = await axios.get(
-    `${API_URL}/me`,
+    `${API_URL}/profile/me`,
     getAuthConfig()
   );
 
   return response.data;
 };
 
-// Update Admin Profile
 export const updateAdminProfile = async (profileData) => {
   const response = await axios.put(
-    `${API_URL}/me`,
+    `${API_URL}/profile/me`,
     profileData,
     getAuthConfig()
   );

@@ -15,12 +15,40 @@ const getAuthConfig = () => {
   };
 };
 
-export const getAllAttendance = async (date = "") => {
-  const url = date
-    ? `${API_URL}/attendance/all?date=${encodeURIComponent(date)}`
-    : `${API_URL}/attendance/all`;
+export const getTodayAttendance = async () => {
+  const response = await axios.get(
+    `${API_URL}/attendance/today`,
+    getAuthConfig()
+  );
 
-  const response = await axios.get(url, getAuthConfig());
+  return response.data;
+};
+
+export const getAttendanceHistory = async () => {
+  const response = await axios.get(
+    `${API_URL}/attendance/history`,
+    getAuthConfig()
+  );
+
+  return response.data;
+};
+
+export const checkIn = async () => {
+  const response = await axios.post(
+    `${API_URL}/attendance/check-in`,
+    {},
+    getAuthConfig()
+  );
+
+  return response.data;
+};
+
+export const checkOut = async () => {
+  const response = await axios.put(
+    `${API_URL}/attendance/check-out`,
+    {},
+    getAuthConfig()
+  );
 
   return response.data;
 };

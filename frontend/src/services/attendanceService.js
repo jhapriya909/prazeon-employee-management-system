@@ -10,39 +10,18 @@ const getAuthConfig = () => {
   return {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
-    withCredentials: true,
   };
 };
 
-export const getTodayAttendance = async () => {
-  const response = await axios.get(`${API_URL}/today`, getAuthConfig());
-  return response.data;
-};
+export const getAllAttendance = async (date = "") => {
+  const endpoint = date
+    ? `${API_URL}/attendance/all?date=${encodeURIComponent(date)}`
+    : `${API_URL}/attendance/all`;
 
-export const checkInAttendance = async () => {
-  const response = await axios.post(
-    `${API_URL}/check-in`,
-    {},
-    getAuthConfig()
-  );
-
-  return response.data;
-};
-
-export const checkOutAttendance = async () => {
-  const response = await axios.put(
-    `${API_URL}/check-out`,
-    {},
-    getAuthConfig()
-  );
-
-  return response.data;
-};
-
-export const getAttendanceHistory = async (month, year) => {
   const response = await axios.get(
-    `${API_URL}/history?month=${month}&year=${year}`,
+    endpoint,
     getAuthConfig()
   );
 

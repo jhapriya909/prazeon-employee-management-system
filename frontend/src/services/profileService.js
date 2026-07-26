@@ -10,13 +10,14 @@ const getAuthConfig = () => {
   return {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   };
 };
 
 export const getMyProfile = async () => {
   const response = await axios.get(
-    `${API_URL}/me`,
+    `${API_URL}/profile/me`,
     getAuthConfig()
   );
 
@@ -25,7 +26,7 @@ export const getMyProfile = async () => {
 
 export const updateMyProfile = async (profileData) => {
   const response = await axios.put(
-    `${API_URL}/me`,
+    `${API_URL}/profile/me`,
     profileData,
     getAuthConfig()
   );
