@@ -10,6 +10,7 @@ const getAuthConfig = () => {
   return {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   };
 };
@@ -35,7 +36,7 @@ export const checkInEmployee = async () => {
 
 export const getEmployeeLeaves = async () => {
   const response = await axios.get(
-    `${API_URL}/leave/my`,
+    `${API_URL}/leaves/my`,
     getAuthConfig()
   );
 
