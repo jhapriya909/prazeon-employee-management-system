@@ -21,12 +21,14 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:5174",
   "https://prazeon-employee-portal-frontend.vercel.app",
 ];
 
+// CORS middleware
 app.use(
   cors({
-    origin: function (origin, callback) {
+    origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -37,12 +39,26 @@ app.use(
   })
 );
 
+// Parse JSON and form data
+app.use(
+  express.json({
+    limit: "5mb",
+  })
+);
+
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: "5mb",
+  })
+);
+
 app.use(cookieParser());
 
 // ================= API ROUTES =================
 app.use("/api/auth", authRoutes);
 app.use("/api/attendance", attendanceRoutes);
-app.use("/api/leaves", leaveRoutes);   // <-- Changed here
+app.use("/api/leaves", leaveRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/dashboard", dashboardRoutes);
@@ -77,5 +93,5 @@ app.use((error, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
