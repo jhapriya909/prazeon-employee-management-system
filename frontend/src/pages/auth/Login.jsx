@@ -5,6 +5,10 @@ import axios from "axios";
 
 import "../../styles/auth.css";
 
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:5000/api";
+
 function Login() {
   const navigate = useNavigate();
 
@@ -44,13 +48,17 @@ function Login() {
       setError("");
 
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API_URL}/auth/login`,
         {
           email,
           password,
         },
         {
+          headers: {
+            "Content-Type": "application/json",
+          },
           withCredentials: true,
+          timeout: 60000,
         }
       );
 
@@ -63,10 +71,9 @@ function Login() {
         response.data?.data?.user;
 
       if (!token || !user) {
-        setError(
-          "Login successful, but token or user information was not received."
+        throw new Error(
+          "Token or user information was not received."
         );
-        return;
       }
 
       localStorage.setItem("token", token);
@@ -76,27 +83,52 @@ function Login() {
         navigate("/admin/dashboard", {
           replace: true,
         });
-      } else if (user.role === "employee") {
+        return;
+      }
+
+      if (user.role === "employee") {
         navigate("/employee/dashboard", {
           replace: true,
         });
-      } else if (user.role === "client") {
+        return;
+      }
+
+      if (user.role === "client") {
         navigate("/client/dashboard", {
           replace: true,
         });
-      } else {
-        localStorage.clear();
-        setError("This account role is not supported.");
+        return;
       }
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setError("This account role is not supported.");
     } catch (requestError) {
-      console.error("Login error:", requestError);
+      console.error(
+        "Login error:",
+        requestError.response?.data || requestError.message
+      );
 
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
+      if (requestError.code === "ECONNABORTED") {
+        setError(
+          "Server is taking too long to respond. Please try again."
+        );
+        return;
+      }
+
+      if (!requestError.response) {
+        setError(
+          "Unable to connect to the server. Please try again after a moment."
+        );
+        return;
+      }
+
       setError(
         requestError.response?.data?.message ||
-          "Unable to login. Please try again."
+          "Unable to login. Please check your email and password."
       );
     } finally {
       setLoading(false);
@@ -124,7 +156,9 @@ function Login() {
         <div className="login-form-wrapper">
           <div className="login-heading">
             <span className="login-label">WELCOME BACK</span>
+
             <h2>Employee Portal</h2>
+
             <p>Please enter your account details to continue.</p>
           </div>
 
@@ -140,6 +174,7 @@ function Login() {
                 value={formData.email}
                 onChange={handleChange}
                 autoComplete="email"
+                required
               />
             </div>
 
@@ -151,7 +186,9 @@ function Login() {
                   type="button"
                   className="forgot-password"
                   onClick={() =>
-                    setError("Forgot password will be added later.")
+                    setError(
+                      "Please contact your administrator to reset your password."
+                    )
                   }
                 >
                   Forgot password?
@@ -167,16 +204,21 @@ function Login() {
                   value={formData.password}
                   onChange={handleChange}
                   autoComplete="current-password"
+                  required
                 />
 
                 <button
                   type="button"
                   className="password-toggle"
                   onClick={() =>
-                    setShowPassword((currentValue) => !currentValue)
+                    setShowPassword(
+                      (currentValue) => !currentValue
+                    )
                   }
                   aria-label={
-                    showPassword ? "Hide password" : "Show password"
+                    showPassword
+                      ? "Hide password"
+                      : "Show password"
                   }
                 >
                   {showPassword ? <FiEyeOff /> : <FiEye />}
@@ -184,7 +226,11 @@ function Login() {
               </div>
             </div>
 
-            {error && <p className="login-error">{error}</p>}
+            {error && (
+              <p className="login-error" role="alert">
+                {error}
+              </p>
+            )}
 
             <button
               type="submit"
