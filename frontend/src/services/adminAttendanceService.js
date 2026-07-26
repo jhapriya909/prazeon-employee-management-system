@@ -26,3 +26,4 @@ export const getAllAttendance = async (date = "") => {
 
   return response.data;
 };
+

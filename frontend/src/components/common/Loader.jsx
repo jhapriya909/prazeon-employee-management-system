@@ -1,4 +1,4 @@
-function Loader({ text = "Loading..." }) {
+﻿function Loader({ text = "Loading..." }) {
   return (
     <div
       style={{

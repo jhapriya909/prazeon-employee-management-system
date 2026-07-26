@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import {
   createEmployee,
   getAllEmployees,
@@ -414,7 +414,7 @@ function Employees() {
                 className="modal-close-btn"
                 onClick={closeModal}
               >
-                ×
+                Ã—
               </button>
             </div>
 

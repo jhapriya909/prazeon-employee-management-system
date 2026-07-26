@@ -1,4 +1,4 @@
-function LeaveTable({ leaves = [] }) {
+﻿function LeaveTable({ leaves = [] }) {
   if (!leaves.length) {
     return (
       <div

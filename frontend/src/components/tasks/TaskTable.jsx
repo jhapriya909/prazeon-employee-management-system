@@ -1,4 +1,4 @@
-function TaskTable({
+﻿function TaskTable({
   tasks = [],
   onStatusChange,
   updatingTaskId,

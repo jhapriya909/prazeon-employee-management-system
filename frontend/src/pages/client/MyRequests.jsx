@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import {
   FiAlertCircle,
   FiCheckCircle,
@@ -41,7 +41,7 @@ function MyRequests() {
       setError("");
 
       const response = await axios.get(
-        `${API_URL}/client/my`,
+        `${API_URL}/tasks/client/my`,
         getAuthConfig()
       );
 
@@ -747,3 +747,4 @@ function MyRequests() {
 }
 
 export default MyRequests;
+

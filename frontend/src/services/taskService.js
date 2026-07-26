@@ -1,4 +1,4 @@
-import axios from "axios";
+﻿import axios from "axios";
 
 const API_URL =
   import.meta.env.VITE_API_URL ||
@@ -10,13 +10,14 @@ const getAuthConfig = () => {
   return {
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   };
 };
 
 export const getMyTasks = async () => {
   const response = await axios.get(
-    `${API_URL}/my`,
+    `${API_URL}/tasks/my`,
     getAuthConfig()
   );
 
@@ -25,7 +26,7 @@ export const getMyTasks = async () => {
 
 export const updateTaskStatus = async (taskId, status) => {
   const response = await axios.put(
-    `${API_URL}/${taskId}/status`,
+    `${API_URL}/tasks/${taskId}/status`,
     { status },
     getAuthConfig()
   );
@@ -35,7 +36,7 @@ export const updateTaskStatus = async (taskId, status) => {
 
 export const addTaskComment = async (taskId, message) => {
   const response = await axios.post(
-    `${API_URL}/${taskId}/comments`,
+    `${API_URL}/tasks/${taskId}/comments`,
     { message },
     getAuthConfig()
   );

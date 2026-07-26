@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import {
   FiAlertCircle,
   FiCheckCircle,
@@ -58,7 +58,7 @@ function ClientDashboard() {
       setError("");
 
       const response = await axios.get(
-        `${API_URL}/client/my`,
+        `${API_URL}/tasks/client/my`,
         getAuthConfig()
       );
 
@@ -167,7 +167,7 @@ useEffect(() => {
       setSuccess("");
 
       const response = await axios.post(
-        `${API_URL}/client/create`,
+        `${API_URL}/tasks/client/create`,
         {
           title: formData.title.trim(),
           description: formData.description.trim(),
@@ -1201,3 +1201,4 @@ useEffect(() => {
 }
 
 export default ClientDashboard;
+

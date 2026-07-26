@@ -1,4 +1,4 @@
-function formatTime(value) {
+﻿function formatTime(value) {
   if (!value) return "--";
 
   const date = new Date(value);

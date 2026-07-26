@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import {
   FiCalendar,
   FiCheckCircle,
@@ -389,7 +389,7 @@ function AdminLeaveManagement() {
               </div>
 
               <button type="button" onClick={closeRejectModal}>
-                ×
+                Ã—
               </button>
             </div>
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import {
   FiArchive,
   FiCheckSquare,
@@ -718,7 +718,7 @@ function AdminTasks() {
                         <strong>{task.title}</strong>
 
                         <span>
-                          {getTaskTypeLabel(task)} •{" "}
+                          {getTaskTypeLabel(task)} â€¢{" "}
                           {task.projectName ||
                             "Employee Portal"}
                         </span>
