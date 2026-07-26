@@ -11,7 +11,7 @@ import {
 } from "react-icons/fi";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/tasks`;
 
 function ClientDashboard() {
   const [requests, setRequests] = useState([]);
@@ -58,7 +58,7 @@ function ClientDashboard() {
       setError("");
 
       const response = await axios.get(
-        `${API_URL}/tasks/client/my`,
+        `${API_URL}/client/my`,
         getAuthConfig()
       );
 
@@ -167,7 +167,7 @@ useEffect(() => {
       setSuccess("");
 
       const response = await axios.post(
-        `${API_URL}/tasks/client/create`,
+        `${API_URL}/client/create`,
         {
           title: formData.title.trim(),
           description: formData.description.trim(),
@@ -1201,4 +1201,5 @@ useEffect(() => {
 }
 
 export default ClientDashboard;
+
 

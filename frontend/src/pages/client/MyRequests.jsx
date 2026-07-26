@@ -10,7 +10,7 @@ import {
 } from "react-icons/fi";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5000/api"}/tasks`;
 
 function MyRequests() {
   const [requests, setRequests] = useState([]);
@@ -41,7 +41,7 @@ function MyRequests() {
       setError("");
 
       const response = await axios.get(
-        `${API_URL}/tasks/client/my`,
+        `${API_URL}/client/my`,
         getAuthConfig()
       );
 
@@ -747,4 +747,5 @@ function MyRequests() {
 }
 
 export default MyRequests;
+
 
